@@ -1,25 +1,25 @@
 ﻿using System.Threading;
 
-CustomList<int> tty = new CustomList<int>();
+CustomList<int> mylist = new CustomList<int>();
 object locker = new object();
 
 //thread1
-Thread one = new Thread(new ParameterizedThreadStart(tty.Add));
+Thread one = new Thread(new ParameterizedThreadStart(mylist.Add));
 one.Name = "Thread1";
 one.Start(5);
 
 //thread2
-Thread two = new Thread(new ParameterizedThreadStart(tty.Add));
+Thread two = new Thread(new ParameterizedThreadStart(mylist.Add));
 two.Name = "Thread2";
 two.Start(10);
 
 //thread3
-Thread three = new Thread(new ParameterizedThreadStart(tty.Add));
+Thread three = new Thread(new ParameterizedThreadStart(mylist.Add));
 three.Name = "Thread3";
 three.Start(25);
 
 //thread4
-Thread four = new Thread(new ParameterizedThreadStart(tty.DeleteAt));
+Thread four = new Thread(new ParameterizedThreadStart(mylist.DeleteAt));
 four.Name = "Thread4";
 four.Start(0);
 
@@ -30,9 +30,9 @@ three.Join();
 four.Join();
 
 //вывод на экран
-for(int i = 0; i < tty.Count; i++)
+for(int i = 0; i < mylist.Count; i++)
 {
-    Console.WriteLine(tty.GetAt(i));
+    Console.WriteLine(mylist.GetAt(i));
 }
 
 public class CustomList<T> : List<T>
