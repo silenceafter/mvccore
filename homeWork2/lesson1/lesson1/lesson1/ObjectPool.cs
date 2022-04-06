@@ -12,13 +12,20 @@ namespace lesson1;
 public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 {
     private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();
+    
+    public TPullItem Create()
+    {
+
+        return new TPullItem();
+    }
+
     public TPullItem Get()
     {
-        if (_threadSafetyDictionary.Count > 0)
+        /*if (_threadSafetyDictionary.Count > 0)
         {
             return _threadSafetyDictionary.FirstOrDefault().Value;
-        }
-        return new TPullItem();
+        }*/
+        return Add(new TPullItem());
     }
 
     public void Release(TPullItem item)
@@ -30,6 +37,12 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 
         item.Reset();
         _threadSafetyDictionary.TryAdd(Program1.IncrementCounter(), item);
+    }
+
+    public TPullItem Add(TPullItem item)
+    {
+        _threadSafetyDictionary.TryAdd(Program1.IncrementCounter(), item);
+        return _threadSafetyDictionary[Program1.Counter];//(Program1.Counter, item);
     }
 
     /*public void HH(object? state)

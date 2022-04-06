@@ -11,16 +11,18 @@ ObjectPool<ClassicPullItem> pool = new();
 var lockObjectOne = new object();
 
 ClassicPullItem item = pool.Get();
-item.Id = 100;
-item.Name = "Just4Fun";
-pool.Release(item);
+ClassicPullItem item2 = pool.Get();
+int y = 6;
+//item.Id = 100;
+//item.Name = "Just4Fun";
+//pool.Release(item);
 
-ClassicPullItem itemSecond = pool.Get();
-itemSecond.Id = 
+//ClassicPullItem itemSecond = pool.Get();
+//itemSecond.Id = 
 
 static class Program1
 {
-    private static int _counter = 0;
+    private static int _counter = 1;
 
     public static int Counter
     {

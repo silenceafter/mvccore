@@ -9,25 +9,26 @@ namespace lesson1;
 
 public sealed class ClassicPullItem : PullItem
 {
-    private Thread _j;
-    public Thread J
+    private Thread _item;
+    public Thread Item
     {
-        get => _j;
+        get => _item;
     }
 
     public ClassicPullItem()
     {
-        var t = new Thread(new ParameterizedThreadStart(GG));
-        t.Name = "Thread1";
-        t.Start(0);
-        Id = Program1.IncrementCounter();
-        Name = "";
-
-
+        _item = new Thread(new ParameterizedThreadStart(GG));
+        _item.Name = $"Thread{ Program1.Counter }";
+        //_item.Start(0);
+        Id = Program1.Counter;//Program1.IncrementCounter();
+        Name = _item.Name;
     }
 
     public int Id { get; set; }
     public string Name { get; set; }
+
+
+
     public override void Reset()
     {
         Id = 0;
@@ -36,7 +37,8 @@ public sealed class ClassicPullItem : PullItem
 
     public void GG(object? state)
     {
-        var locker = _j;
+        Thread.Sleep(3000);
+        /*var locker = _j;
         //
         lock (locker)
         {
@@ -46,6 +48,11 @@ public sealed class ClassicPullItem : PullItem
             {
                 
             }
-        }
+        }*/
+    }
+
+    public int GetId()
+    {
+        return this.Id;
     }
 }
