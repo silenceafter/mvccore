@@ -10,8 +10,9 @@ using lesson1;
 ObjectPool<ClassicPullItem> pool = new();
 var lockObjectOne = new object();
 
-ClassicPullItem item = pool.Get();
-ClassicPullItem item2 = pool.Get();
+//ClassicPullItem item = pool.Get();
+//ClassicPullItem item2 = pool.Get();
+
 int y = 6;
 //item.Id = 100;
 //item.Name = "Just4Fun";
@@ -22,7 +23,7 @@ int y = 6;
 
 static class Program1
 {
-    private static int _counter = 1;
+    private static int _counter = 0;
 
     public static int Counter
     {

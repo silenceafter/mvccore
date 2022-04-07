@@ -11,7 +11,17 @@ namespace lesson1;
 
 public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 {
-    private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();
+    public ObjectPool()
+    {
+        _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();
+        //кол-во доступных потоков по умолчанию
+        for(int i = 0; i < 5; i++)
+        {
+            Add(new TPullItem());
+        }
+    }
+
+    private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary;
     
     public TPullItem Create()
     {
@@ -21,10 +31,14 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 
     public TPullItem Get()
     {
-        /*if (_threadSafetyDictionary.Count > 0)
-        {
-            return _threadSafetyDictionary.FirstOrDefault().Value;
-        }*/
+        if (_threadSafetyDictionary.Count > 0)
+        {     
+            foreach(var thread in _threadSafetyDictionary)
+            {
+                
+            }       
+            //return _threadSafetyDictionary.FirstOrDefault().Value;
+        }
         return Add(new TPullItem());
     }
 
