@@ -7,9 +7,9 @@ using lesson1;
 //
 namespace lesson1;
 
-public sealed class ClassicPullItem : PullItem
+public sealed class ClassicPullItem// : PullItem
 {
-    public ClassicPullItem()
+    /*public ClassicPullItem()
     {
         _item = new Thread(new ParameterizedThreadStart(GG));
         _item.Name = $"Thread{ Program1.Counter }";
@@ -59,10 +59,5 @@ public sealed class ClassicPullItem : PullItem
                 
             }
         }*/
-    }
-
-    public int GetId()
-    {
-        return _id;
-    }
+    //}
 }

@@ -8,18 +8,7 @@ using lesson1;
 //namespace lesson1;
 
 ObjectPool<ClassicPullItem> pool = new();
-var lockObjectOne = new object();
-
-//ClassicPullItem item = pool.Get();
-//ClassicPullItem item2 = pool.Get();
-
 int y = 6;
-//item.Id = 100;
-//item.Name = "Just4Fun";
-//pool.Release(item);
-
-//ClassicPullItem itemSecond = pool.Get();
-//itemSecond.Id = 
 
 static class Program1
 {

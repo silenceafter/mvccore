@@ -11,19 +11,30 @@ namespace lesson1;
 
 public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 {
-    public ObjectPool()
+    public ObjectPool(int treadCount)
     {
-        _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();
-        //кол-во доступных потоков по умолчанию
-        for(int i = 0; i < 5; i++)
-        {
-            Add(new TPullItem());
-        }
+        _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();        
+        _threads = new Thread[treadCount];//кол-во доступных потоков по умолчанию
+        _customTask = new();
     }
 
     private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary;
+    private Thread[] _threads;
+    private Queue<(Action<object?> Work, object? Parameter)> _customTask;//= new()
+
+    public Thread[] Threads
+    {
+        get => _threads;
+        set => _threads = value;
+    }
+
+    public Queue<(Action<object?> Work, object? Parameter)> CustomTask
+    {
+        get => _customTask;
+        set => _customTask = value;
+    }
     
-    public TPullItem Create()
+    /*public TPullItem Create()
     {
 
         return new TPullItem();
@@ -35,7 +46,7 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
         {     
             foreach(var thread in _threadSafetyDictionary)
             {
-                
+                return _threadSafetyDictionary.FirstOrDefault().Value;
             }       
             //return _threadSafetyDictionary.FirstOrDefault().Value;
         }
@@ -57,7 +68,7 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
     {
         _threadSafetyDictionary.TryAdd(Program1.IncrementCounter(), item);
         return _threadSafetyDictionary[Program1.Counter];//(Program1.Counter, item);
-    }
+    }*/
 
     /*public void HH(object? state)
     {
