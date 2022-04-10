@@ -7,7 +7,9 @@ using lesson1;
 
 //namespace lesson1;
 
-ObjectPool<ClassicPullItem> pool = new();
+ObjectPool<ClassicPullItem> pool = new(5);
+//Console.Pau
+Console.ReadLine();
 int y = 6;
 
 static class Program1

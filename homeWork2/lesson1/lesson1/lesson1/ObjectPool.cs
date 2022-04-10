@@ -11,16 +11,26 @@ namespace lesson1;
 
 public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
 {
-    public ObjectPool(int treadCount)
+    public ObjectPool(int threadCount)
     {
+        _name = "CustomThreadPool";
         _threadSafetyDictionary = new ConcurrentDictionary<int, TPullItem>();        
-        _threads = new Thread[treadCount];//кол-во доступных потоков по умолчанию
+        _threads = new Thread[threadCount];//кол-во доступных потоков по умолчанию
+        _priority = ThreadPriority.Normal;
         _customTask = new();
+        CreateThreads();
+        int h = 6;
     }
 
+    public object _lock = new object();    
+    private readonly string _name;
     private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary;
     private Thread[] _threads;
-    private Queue<(Action<object?> Work, object? Parameter)> _customTask;//= new()
+    private ThreadPriority _priority;
+    private Queue<(Action<object?> CustomTask, object? Parameter)> _customTask;//= new()
+    public int cnt = 0;
+
+    public string Name => _name;
 
     public Thread[] Threads
     {
@@ -28,10 +38,60 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
         set => _threads = value;
     }
 
+    public ThreadPriority Priority
+    {
+        get => _priority;
+        set => _priority = value;      
+    }
+
     public Queue<(Action<object?> Work, object? Parameter)> CustomTask
     {
         get => _customTask;
         set => _customTask = value;
+    }
+
+    public void AddTasks()
+    {
+
+    }
+
+    public void CreateThreads()
+    {
+        var myobject = new object();
+        for(int i = 0; i < _threads.Length; i++)
+        {
+            var thread = new Thread(new ParameterizedThreadStart(kkk));
+            thread.Name = $"Thread{i + 1}";
+            thread.Priority = _priority;
+            thread.IsBackground = true;            
+            //
+            _threads[i] = thread;
+            _threads[i].Start(i + 1);
+        }
+    }
+
+    public void kkk(object? value)
+    {
+        if (value is not null)
+        {
+            bool acquiredLock = false; 
+            if (Monitor.TryEnter(_lock))
+            {
+                Thread.Sleep(100);
+                for (int i = 0; i < _threads.Length; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {cnt}");
+                    cnt++;
+                    
+                }
+                Monitor.Exit(_lock);
+            }
+                                                    
+            //Thread.Sleep(3000);
+            //Console.WriteLine(Thread.CurrentThread.Name);
+            //Console.WriteLine($"{cnt} by {Thread.CurrentThread.Name}");
+            
+        }        
     }
     
     /*public TPullItem Create()

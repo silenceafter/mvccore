@@ -7,25 +7,25 @@ using lesson1;
 //
 namespace lesson1;
 
-public sealed class ClassicPullItem// : PullItem
+public sealed class ClassicPullItem : PullItem
 {
-    /*public ClassicPullItem()
+    public ClassicPullItem()
     {
-        _item = new Thread(new ParameterizedThreadStart(GG));
+        /*_item = new Thread(new ParameterizedThreadStart(GG));
         _item.Name = $"Thread{ Program1.Counter }";
         //_item.Start(0);
         _id = Program1.Counter;//Program1.IncrementCounter();
-        _name = _item.Name;
+        _name = _item.Name;*/
     }
 
-    private Thread _item;
-    private int _id;
-    private string _name;
+    //private Thread _item;
+    private int _id = 0;
+    private string _name = "";
 
-    public Thread Item
+    /*public Thread Item
     {
         get => _item;
-    }
+    }*/
     
     public int Id 
     {
@@ -45,7 +45,7 @@ public sealed class ClassicPullItem// : PullItem
         _name = string.Empty;
     }
 
-    public void GG(object? state)
+    /*public void GG(object? state)
     {
         Thread.Sleep(3000);
         /*var locker = _j;
