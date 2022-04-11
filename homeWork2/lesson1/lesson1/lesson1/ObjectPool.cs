@@ -27,7 +27,7 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
     private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary;
     private Thread[] _threads;
     private ThreadPriority _priority;
-    private Queue<(Action<object?> CustomTask, object? Parameter)> _customTask;//= new()
+    private Queue<Action?> _customTask;//<(Action<object?> CustomTask, object? Parameter)> _customTask;//= new()
     public int cnt = 0;
 
     public string Name => _name;
@@ -44,15 +44,16 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
         set => _priority = value;      
     }
 
-    public Queue<(Action<object?> Work, object? Parameter)> CustomTask
+    public Queue<Action?> CustomTask//<(Action<object?> Work, object? Parameter)> CustomTask
     {
         get => _customTask;
         set => _customTask = value;
     }
 
-    public void AddTasks()
+    public void AddTasks(Action? task)
     {
-
+        _customTask.Enqueue(() => task());
+        
     }
 
     public void CreateThreads()
