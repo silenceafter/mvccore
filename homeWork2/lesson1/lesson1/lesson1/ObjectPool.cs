@@ -27,7 +27,7 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
     private ConcurrentDictionary<int, TPullItem> _threadSafetyDictionary;
     private Thread[] _threads;
     private ThreadPriority _priority;
-    private Queue<Action?> _customTask;//<(Action<object?> CustomTask, object? Parameter)> _customTask;//= new()
+    private Queue<ClassicPullItem?> _customTask;//<(Action<object?> CustomTask, object? Parameter)> _customTask;//= new()
     public int cnt = 0;
 
     public string Name => _name;
@@ -44,16 +44,40 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
         set => _priority = value;      
     }
 
-    public Queue<Action?> CustomTask//<(Action<object?> Work, object? Parameter)> CustomTask
+    public Queue<ClassicPullItem?> CustomTask//<(Action<object?> Work, object? Parameter)> CustomTask
     {
         get => _customTask;
         set => _customTask = value;
     }
 
-    public void AddTasks(Action? task)
+    public void AddTasks(ClassicPullItem? taskObject)
     {
-        _customTask.Enqueue(() => task());
-        
+        taskObject.Ready = true;
+        _customTask.Enqueue(taskObject);
+        Console.WriteLine("1a");
+        //_customTask.Enqueue(() => taskObject());
+        //Console.WriteLine(_customTask.Count);//WorkingTask(1);
+        ManageTasks();
+    }
+
+    public void ManageTasks() 
+    {
+        Console.WriteLine("2a");
+        if (_customTask.Count > 0) 
+        {
+            //var task = _customTask.Dequeue();
+            foreach(var thread in _threads)
+            {
+                thread.Join();
+                break;
+                //Console.WriteLine($"{thread.Name}: {thread.ThreadState}");
+                /*if (thread.IsAlive)
+                {
+
+                    //thread.Join();
+                }*/
+            }
+        }
     }
 
     public void CreateThreads()
@@ -61,38 +85,55 @@ public sealed class ObjectPool<TPullItem> where TPullItem : PullItem, new()
         var myobject = new object();
         for(int i = 0; i < _threads.Length; i++)
         {
-            var thread = new Thread(new ParameterizedThreadStart(kkk));
+            var thread = new Thread(new ParameterizedThreadStart(WorkingTask));//WorkingTask
             thread.Name = $"Thread{i + 1}";
             thread.Priority = _priority;
             thread.IsBackground = true;            
             //
             _threads[i] = thread;
-            _threads[i].Start(i + 1);
+            _threads[i].Start(new object());
         }
     }
 
-    public void kkk(object? value)
+    public void hh(ClassicPullItem item)
     {
-        if (value is not null)
-        {
-            bool acquiredLock = false; 
-            if (Monitor.TryEnter(_lock))
+
+    }
+
+    public void WorkingTask(object? value)
+    {
+        Console.WriteLine("3a");
+        //if (value is not null)
+        //{
+            Console.WriteLine("11");
+            if (_customTask.Count > 0)
             {
-                Thread.Sleep(100);
-                for (int i = 0; i < _threads.Length; i++)
-                {
-                    Console.WriteLine($"{Thread.CurrentThread.Name}: {cnt}");
-                    cnt++;
-                    
-                }
-                Monitor.Exit(_lock);
+                var task = _customTask.Dequeue();             
+                task.Method0();                
             }
+            //for(int j = 0; j < _threads.Length; j++) {
+              //  var t = _threads[j];
+                //Console.WriteLine(t.ThreadState);
+
+                /*if (Monitor.TryEnter(value))//_lock
+                {
+                    Thread.Sleep(100);
+                    int cnt = 0;
+                    for (int i = 0; i < _threads.Length; i++)
+                    {
+                        Console.WriteLine($"{Thread.CurrentThread.Name}: {cnt}");
+                        cnt++;
+                        
+                    }
+                    Monitor.Exit(value);//_lock                
+                }*/
+            
                                                     
             //Thread.Sleep(3000);
             //Console.WriteLine(Thread.CurrentThread.Name);
             //Console.WriteLine($"{cnt} by {Thread.CurrentThread.Name}");
             
-        }        
+        //}        
     }
     
     /*public TPullItem Create()

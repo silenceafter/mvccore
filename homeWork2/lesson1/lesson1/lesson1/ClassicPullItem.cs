@@ -11,6 +11,9 @@ public sealed class ClassicPullItem : PullItem
 {
     public ClassicPullItem()
     {
+        _name = $"CustomTask{ Program1.Counter }";
+        _ready = false;
+        _lock = new Object();
         /*_item = new Thread(new ParameterizedThreadStart(GG));
         _item.Name = $"Thread{ Program1.Counter }";
         //_item.Start(0);
@@ -19,8 +22,23 @@ public sealed class ClassicPullItem : PullItem
     }
 
     //private Thread _item;
+    private Action? _customTask;
+    private object _lock;
+    private bool _ready;
     private int _id = 0;
     private string _name = "";
+
+    public Action? CustomTask
+    {
+        get => _customTask;
+        set => _customTask = value;
+    }
+
+    public bool Ready
+    {
+        get => _ready;
+        set => _ready = value;
+    }
 
     /*public Thread Item
     {
@@ -43,6 +61,14 @@ public sealed class ClassicPullItem : PullItem
     {
         _id = 0;
         _name = string.Empty;
+    }
+
+    public void Method0()
+    {
+        if (_ready) 
+        {
+            Console.WriteLine("Method0");
+        }        
     }
 
     /*public void GG(object? state)
