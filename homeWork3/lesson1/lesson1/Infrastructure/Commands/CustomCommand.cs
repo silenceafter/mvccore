@@ -1,20 +1,22 @@
 ﻿using lesson1.Infrastructure.Commands.Base;
+using lesson1.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace lesson1.Infrastructure.Commands;
 
-public class ShowMessageCommand : CreateCommand
+public class CustomCommand : CreateCommand
 {
     public override void Execute(object? parameter)
     {
         if (parameter is null) return;
         var message = parameter as string ?? parameter.ToString();
-        MessageBox.Show(message, "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+        //
+        ChildWindow childWindow = new();
+        childWindow.Show();
     }
 
     public override bool CanExecute(object? parameter)

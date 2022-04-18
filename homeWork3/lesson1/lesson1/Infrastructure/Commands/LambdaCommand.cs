@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace lesson1.Infrastructure.Commands.Base;
 
-public class LambdaCommand : Command
+public class LambdaCommand : CreateCommand
 {
     public LambdaCommand(Action<object?> OnExecute, Func<object?, bool>? OnCanExecute = null)
     {

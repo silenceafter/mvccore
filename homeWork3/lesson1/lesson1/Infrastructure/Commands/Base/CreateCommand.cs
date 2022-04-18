@@ -7,13 +7,12 @@ using System.Windows.Input;
 
 namespace lesson1.Infrastructure.Commands.Base;
 
-public abstract class Command : ICommand
+public abstract class CreateCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged
     {
         add => CommandManager.RequerySuggested += value;
         remove => CommandManager.RequerySuggested -= value;
-
     }
 
     public virtual bool CanExecute(object? parameter) => true;
