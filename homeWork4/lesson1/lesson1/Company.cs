@@ -1,6 +1,6 @@
 namespace lesson1;
 
-public class Company
+/*public class Company
 {
     public Company()
     {
@@ -19,4 +19,4 @@ public class Company
     {
 
     }
-}
+}*/

@@ -1,6 +1,6 @@
 namespace lesson1;
 
-public class ResponsePhotos
+public class ResponsePhoto
 {
     //https://jsonplaceholder.typicode.com/photos
     public int albumId { get; set; }

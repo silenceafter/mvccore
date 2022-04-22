@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace lesson1;
 
-/*public class JsonDownloader<T1, T2>
+public class JsonDownloader//<T1,T2,T3>
 {
 	public JsonDownloader()
     {
@@ -30,13 +30,13 @@ namespace lesson1;
 		set => _tokenSource = value;
     }*/
 
-/*	public async Task<T1, T2> Start<T1, T2>(string link, int id)
+	public async Task<T> Start<T>(string link, int id)
 	//public async Task<T> Start<T>(string link, int id) where T : ResponseCompany, new()
 	{		
 		CancellationTokenSource tokenSource = new CancellationTokenSource();
 		Console.WriteLine("Получение данных:");
 		//string link = $"https://www.javaniceday.com/frandom/api/companies?quantity={1}";
-		var task = GetRequest<T1, T2>(link, tokenSource);
+		var task = GetRequest<T>(link, tokenSource);
 		if (task.Exception != null)
 		{
 			//ошибка
@@ -57,24 +57,25 @@ namespace lesson1;
 			tokenSource.Dispose();
 		}
 
-		WriteToFile<T1, T2>(task);
+		//WriteToFile<T1, T2>(task);
 		return task.Result;
 	}
 
-	public async Task<T1, T2> GetRequest<T1, T2>(string link, CancellationTokenSource tokenSource)
+	public async Task<T> GetRequest<T>(string link, CancellationTokenSource tokenSource)
 	//public async Task<T> GetRequest<T>(string link, CancellationTokenSource tokenSource) where T: ResponseCompany, new()//ResponseCompanies
 	{
 		
-		//T result = new T();
+		var result = (T)Activator.CreateInstance(typeof(T));//T result = new T();
+		//var gg = (T)result;
 		try
 		{
 			Console.WriteLine($"{link}");//($"https://jsonplaceholder.typicode.com/posts/{id}");
 			HttpResponseMessage response = await _myClient.GetAsync(link, tokenSource.Token);//($"https://jsonplaceholder.typicode.com/posts/{id}", _tokenSource.Token);
 			response.EnsureSuccessStatusCode();//проверка                
 			string responseBody = await response.Content.ReadAsStringAsync();
-			List<T> result1 = JsonSerializer.Deserialize<List<T>>(responseBody);
+			T result1 = JsonSerializer.Deserialize<T>(responseBody);//list
 			//result = //JsonSerializer.Deserialize<List<ResponseCompanies>>(responseBody);
-			result = result1.First();
+			result = result1;//.First();
 		}
 		catch (HttpRequestException ex)
 		{
@@ -83,7 +84,7 @@ namespace lesson1;
 		return result;
 	}
 
-	public bool WriteToFile<T>(Task<T> task)//ResponseCompanies
+/*	public bool WriteToFile<T>(Task<T> task)//ResponseCompanies
 	{
 		var status = true;
 		try
@@ -102,5 +103,5 @@ namespace lesson1;
 			status = false;
 		}
 		return status;
-	}
-}*/
+	}*/
+}

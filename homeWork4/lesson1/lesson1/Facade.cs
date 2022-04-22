@@ -2,7 +2,7 @@ namespace lesson1;
 
 public class Facade
 {
-    public Facade(ResponseCompany company)
+    /*public Facade(ResponseCompany company)
     {
         _company = company;
     }
@@ -18,5 +18,5 @@ public class Facade
     public void GetNameAll()
     {
         //взять текст из полей name/title разных объектов
-    }
+    }*/
 }
