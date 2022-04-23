@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 var jsonDownloader = new JsonDownloader();//<ResponseTodos,ResponsePhoto,ResponseAlbum>();
 string link = "";
-//todo
-ResponseTodos todo = null;
-List<ResponseTodos> todos = new List<ResponseTodos>();
+//todo = product source 1
+ResponseTodo todo = null;
+List<ResponseTodo> todos = new List<ResponseTodo>();
 for(int i = 0; i < 5; i++)
 {
     link = $"https://jsonplaceholder.typicode.com/todos/{i + 1}";
-    todo = await jsonDownloader.Start<ResponseTodos>(link, i + 1);
+    todo = await jsonDownloader.Start<ResponseTodo>(link, i + 1);
     if (todo is not null)
     {
         todos.Add(todo);
     }
 }
 
-//photo
+//photo = product source 2
 ResponsePhoto photo = null;
 List<ResponsePhoto> photos = new List<ResponsePhoto>();
 for(int i = 0; i < 5; i++)
@@ -35,17 +35,36 @@ for(int i = 0; i < 5; i++)
     }
 }
 
-//albums
-ResponseAlbum album = null;
-List<ResponseAlbum> albums = new List<ResponseAlbum>();
+//comments = product source 3
+ResponseComment comment = null;
+List<ResponseComment> comments = new List<ResponseComment>();
 for(int i = 0; i < 5; i++)
 {
-    link = $"https://jsonplaceholder.typicode.com/albums/{i + 1}";
-    album = await jsonDownloader.Start<ResponseAlbum>(link, i + 1);
-    if (album is not null)
+    link = $"https://jsonplaceholder.typicode.com/comments/{i + 1}";
+    comment = await jsonDownloader.Start<ResponseComment>(link, i + 1);
+    if (comment is not null)
     {
-        albums.Add(album);
+        comments.Add(comment);
     }
+}
+
+//response to item_object
+List<Todo> todoObjects = new List<Todo>();
+foreach(var item in todos)
+{
+    todoObjects.Add(new Todo(item));
+}
+
+List<Photo> photoObjects = new List<Photo>();
+foreach(var item in photos)
+{
+    photoObjects.Add(new Photo(item));
+}
+
+List<Comment> commentObjects = new List<Comment>();
+foreach(var item in comments)
+{
+    commentObjects.Add(new Comment(item));
 }
 
 Console.ReadLine();

@@ -2,12 +2,11 @@ namespace lesson1;
 
 public class Facade
 {
-    /*public Facade(ResponseCompany company)
+    public Facade()
     {
-        _company = company;
     }
 
-    private ResponseCompany? _company;
+    /*private ResponseCompany? _company;
 
     public ResponseCompany Company
     {

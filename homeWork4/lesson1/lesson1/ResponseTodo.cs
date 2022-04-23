@@ -1,6 +1,6 @@
 namespace lesson1;
 
-public class ResponseTodos
+public class ResponseTodo
 {
     //https://jsonplaceholder.typicode.com/todos
     public int userId { get; set; }
