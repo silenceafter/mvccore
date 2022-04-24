@@ -7,16 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace lesson1;
 
-public class JsonDownloader//<T1,T2,T3>
+public class JsonDownloader
 {
 	public JsonDownloader()
     {
 		_myClient = new HttpClient();
-		//_tokenSource = new CancellationTokenSource();
 	}
 
 	private HttpClient _myClient;
-	//private CancellationTokenSource _tokenSource;
 
 	public HttpClient MyClient
     {
@@ -24,29 +22,21 @@ public class JsonDownloader//<T1,T2,T3>
 		set => _myClient = value;
     }
 
-	/*public CancellationTokenSource TokenSource
-    {
-		get => _tokenSource;
-		set => _tokenSource = value;
-    }*/
-
 	public async Task<T> Start<T>(string link, int id)
-	//public async Task<T> Start<T>(string link, int id) where T : ResponseCompany, new()
 	{		
 		CancellationTokenSource tokenSource = new CancellationTokenSource();
-		Console.WriteLine("Получение данных:");
-		//string link = $"https://www.javaniceday.com/frandom/api/companies?quantity={1}";
 		var task = GetRequest<T>(link, tokenSource);
 		if (task.Exception != null)
 		{
-			//ошибка
+			//
+			throw new Exception($"{task.Exception}");
 		}
 
 		//ждем выполнения задач
 		try
 		{
 			tokenSource.CancelAfter(10000);
-			_ = await task;//_ = await Task.WhenAll(Tasks);
+			_ = await task;
 		}
 		catch (TaskCanceledException ex)
 		{
@@ -56,26 +46,19 @@ public class JsonDownloader//<T1,T2,T3>
 		{
 			tokenSource.Dispose();
 		}
-
-		//WriteToFile<T1, T2>(task);
 		return task.Result;
 	}
 
 	public async Task<T> GetRequest<T>(string link, CancellationTokenSource tokenSource)
-	//public async Task<T> GetRequest<T>(string link, CancellationTokenSource tokenSource) where T: ResponseCompany, new()//ResponseCompanies
 	{
 		
-		var result = (T)Activator.CreateInstance(typeof(T));//T result = new T();
-		//var gg = (T)result;
+		var result = (T)Activator.CreateInstance(typeof(T));
 		try
 		{
-			Console.WriteLine($"{link}");//($"https://jsonplaceholder.typicode.com/posts/{id}");
-			HttpResponseMessage response = await _myClient.GetAsync(link, tokenSource.Token);//($"https://jsonplaceholder.typicode.com/posts/{id}", _tokenSource.Token);
+			HttpResponseMessage response = await _myClient.GetAsync(link, tokenSource.Token);
 			response.EnsureSuccessStatusCode();//проверка                
 			string responseBody = await response.Content.ReadAsStringAsync();
-			T result1 = JsonSerializer.Deserialize<T>(responseBody);//list
-			//result = //JsonSerializer.Deserialize<List<ResponseCompanies>>(responseBody);
-			result = result1;//.First();
+			result = JsonSerializer.Deserialize<T>(responseBody);
 		}
 		catch (HttpRequestException ex)
 		{
@@ -83,25 +66,4 @@ public class JsonDownloader//<T1,T2,T3>
 		}
 		return result;
 	}
-
-/*	public bool WriteToFile<T>(Task<T> task)//ResponseCompanies
-	{
-		var status = true;
-		try
-		{
-			if (task.IsCompletedSuccessfully)
-			{				
-				Console.WriteLine($"{task.Result}");
-				/*Console.WriteLine($"{task.Result.name}");
-				Console.WriteLine($"{task.Result.type}");
-				Console.WriteLine($"{task.Result.displayName}\n");*/
-/*			}
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine($"Ошибка записи в файл: {ex.Message}");
-			status = false;
-		}
-		return status;
-	}*/
 }

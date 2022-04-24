@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-var jsonDownloader = new JsonDownloader();//<ResponseTodos,ResponsePhoto,ResponseAlbum>();
+var jsonDownloader = new JsonDownloader();
 string link = "";
 //todo = product source 1
 ResponseTodo todo = null;
@@ -67,4 +67,12 @@ foreach(var item in comments)
     commentObjects.Add(new Comment(item));
 }
 
+//facade
+var facade = new Facade(todoObjects, photoObjects, commentObjects);
+var names = facade.GetNameAll();
+
+foreach(var name in names)
+{
+    Console.WriteLine($"product: {name}");
+}
 Console.ReadLine();
