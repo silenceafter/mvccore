@@ -1,3 +1,5 @@
+namespace homeWork5;
+
 [Serializable]
 public class CustomCpu : ICpuData
 {

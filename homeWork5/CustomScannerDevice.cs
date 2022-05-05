@@ -1,3 +1,5 @@
+namespace homeWork5;
+
 public sealed class CustomScannerDevice : IScannerDevice
 {
     private Stream? _data;

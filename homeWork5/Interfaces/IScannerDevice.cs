@@ -1,3 +1,5 @@
+namespace homeWork5;
+
 //сканер
 public interface IScannerDevice
 {

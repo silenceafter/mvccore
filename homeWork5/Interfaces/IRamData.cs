@@ -1,3 +1,5 @@
+namespace homeWork5;
+
 public interface IRAMData
 {
     int FreeMem { get; }

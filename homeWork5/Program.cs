@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
+using homeWork5;
 
 //1
 var cpu_one = new CustomCpu(25, 4, false);//данные процессора
@@ -42,11 +43,19 @@ if (scanner != null)
         cpu_three_array = device.Scan(cpu_three);
         ram_three_array = device.Scan(ram_three);
         
-        //xml
-        var xmlStrategy = new XmlScanOutputStrategy();
-        scannerContext.CurrentStrategy = xmlStrategy;
-        //scannerContext.Execute(cpu_one_array);
-        //json        
+        //json
+        var jsonStrategy = new JsonScanOutputStrategy();
+        scannerContext.CurrentStrategy = jsonStrategy;
+        //
+        scannerContext.Execute(cpu_one_array);
+        scannerContext.Execute(cpu_two_array);
+        scannerContext.Execute(cpu_three_array);
+
+        scannerContext.Execute(ram_one_array);
+        scannerContext.Execute(ram_two_array);
+        scannerContext.Execute(ram_three_array);
+
+        //xml     
     }    
 }
 Console.ReadLine();
