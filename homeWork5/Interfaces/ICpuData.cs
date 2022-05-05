@@ -1,8 +1,0 @@
-namespace homeWork5;
-
-public interface ICpuData
-{
-    int Percent { get; }
-    int Threads { get; }
-    bool Error { get; }
-}
