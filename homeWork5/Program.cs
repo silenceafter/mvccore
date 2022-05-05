@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Configuration;
+using Microsoft.Extensions.Logging.Console;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using homeWork5;
+
+//logger
+using ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+ILogger logger = loggerFactory.CreateLogger<ScannerContext>();
 
 //1
 var cpu_one = new CustomCpu(25, 4, false);//данные процессора
@@ -26,7 +33,7 @@ byte[] cpu_three_array, ram_three_array;
 var scanner = new CustomScannerDevice();
 if (scanner != null)
 {
-    var scannerContext = new ScannerContext(scanner);
+    var scannerContext = new ScannerContext(scanner, logger);
     var device = scannerContext.Device;
     if (device != null)
     {
@@ -55,7 +62,17 @@ if (scanner != null)
         scannerContext.Execute(ram_two_array);
         scannerContext.Execute(ram_three_array);
 
-        //xml     
+        //xml
+        var xmlStrategy = new XmlScanOutputStrategy();
+        scannerContext.CurrentStrategy = xmlStrategy;
+        //
+        scannerContext.Execute(cpu_one_array);
+        scannerContext.Execute(cpu_two_array);
+        scannerContext.Execute(cpu_three_array);
+
+        scannerContext.Execute(ram_one_array);
+        scannerContext.Execute(ram_two_array);
+        scannerContext.Execute(ram_three_array);
     }    
 }
 Console.ReadLine();
