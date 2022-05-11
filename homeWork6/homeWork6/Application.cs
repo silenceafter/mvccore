@@ -7,27 +7,17 @@ using System.Threading.Tasks;
 
 namespace homeWork6
 {
-    public class Application
+    public class Application : IApplication
     {
-        
-        //protected readonly IEmployeeService _employeeService;
-        //protected readonly IPrintService _printService;
-
-        public Application()
+        private readonly IService _service;
+        public Application(IService service)
         {
-            
+            _service = service;
         }
-        /*public Application(IEmployeeService employeeService, IPrintService printService)
-        {
-            _employeeService = employeeService;
-            _printService = printService;
-        }*/
 
-         public void Run()
+        public void Run()
         {
-
-            /*var employee = _employeeService.GetEmployee();
-            _printService.Print(employee.ToString());*/
+            _service.WriteInformation("Injected!");
         }
     }
 }
