@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace homeWork6.Interfaces
 {
-    internal interface IScanOutputStrategy
+    public interface IScanOutputStrategy
     {
+        void Save(string filename, byte[] data);
     }
 }
