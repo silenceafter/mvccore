@@ -40,7 +40,7 @@ public class CustomDrive
         _type = type;
         _filesystem = filesystem;
         _totalMemory = totalMemory;
-        _usedMemeory = usedMemory;
+        _usedMemory = usedMemory;
         _freeMemory = GetFreeMemory(usedMemory, totalMemory);
         _percentOfFreeMemory = GetPercentOfFreeMemory(_freeMemory, totalMemory);
         _volumeNumber = volumeNumber;
@@ -50,7 +50,7 @@ public class CustomDrive
     private CDriveType _type;
     private FileSystemType _filesystem;
     private long _totalMemory;//MB
-    private long _usedMemeory;//MB
+    private long _usedMemory;//MB
     private long _freeMemory;//MB
     private uint _percentOfFreeMemory;
     private string _volumeNumber;
@@ -79,10 +79,10 @@ public class CustomDrive
         set => _totalMemory = value;
     }
 
-    public long UsedMemeory
+    public long UsedMemory
     {
-        get => _usedMemeory;
-        set => _usedMemeory = value;
+        get => _usedMemory;
+        set => _usedMemory = value;
     }
 
     public long FreeMemory

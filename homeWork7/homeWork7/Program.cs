@@ -1,6 +1,4 @@
 ﻿using homeWork7;
-using Microsoft.AspNetCore.Mvc.Core;
-using Microsoft.AspNetCore.Mvc.Razor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,4 +9,5 @@ using TemplateEngine.Docx;
 List<CustomDrive> drives = new List<CustomDrive>();
 drives.Add(new CustomDrive("C", CDriveType.Fixed, FileSystemType.NTFS, 487727, 116620, "8412-22EB"));
 drives.Add(new CustomDrive("D", CDriveType.Fixed, FileSystemType.NTFS, 953751, 520734, "0AFD-4544"));
-Console.ReadKey();
+CustomReport.DrivesReport(drives);
+Console.WriteLine("Выполнено");
