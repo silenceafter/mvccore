@@ -1,6 +1,18 @@
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h2>Index</h2>
-<p>ViewTemplate</p>
+@model WorkerViewModel
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>"MyHeadTitle"</title>
+</head>
+<body>
+    <div>@Model.WorkerDetailsViewModels[0].Worker.LastName</div>
+    @{
+        /*foreach (var viewModel in @Model.WorkerDetailsViewModels)
+        {
+            <h1>"Header here"</h1>
+            <div>
+                @viewModel.Worker.FirstName + " " + @viewModel.Worker.LastName
+            </div>
+        }*/        
+    }
+</body>
+</html>

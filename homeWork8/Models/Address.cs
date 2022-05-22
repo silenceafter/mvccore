@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-namespace homeWork8.Models;
+namespace homeWork8;
 
 public class Address
 {
+
     public int WorkerId { get; set; }
     public string City { get; set; }
     public string State { get; set; }

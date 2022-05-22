@@ -1,14 +1,15 @@
 using System.ComponentModel.DataAnnotations;
-namespace homeWork8.Models;
+//using homeWork8;
+namespace homeWork8;
 
 public class Worker
 {
     public Worker()
     {
-        Id = GetId();
+        Id = 0;
     }
 
-    private int _cnt = 0;
+    //private int _cnt = 0;
     public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -17,9 +18,9 @@ public class Worker
     public string Gender { get; set; }
     public string Position { get; set; }
 
-    public int GetId()
+    /*public int GetId()
     {
         _cnt++;
         return _cnt;
-    }
+    }*/
 }

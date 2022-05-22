@@ -1,5 +1,5 @@
 using homeWork8.Models;
-namespace homeWork8.ViewModels;
+namespace homeWork8;
 
 public class WorkerDetailsViewModel
 {
