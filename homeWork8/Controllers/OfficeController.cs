@@ -1,16 +1,41 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
-//namespace homeWork8.Controller;
+namespace homeWork8;
 
 public class OfficeController: Controller
 {
-    public IActionResult Index()
+    private readonly IWorkersStore _workerStore;
+
+    public OfficeController(IWorkersStore workersStore)
     {
-        return View();
+        _workerStore = workersStore;
     }
 
-    public string Welcome()
+    public ViewResult Index()
     {
-        return "";
+        var workerViewModel = new WorkerViewModel();
+        workerViewModel.WorkerDetailsViewModels = new List<WorkerDetailsViewModel>();
+        //
+        var workers = _workerStore.GetWorkerAll();
+        if (workers != null)
+        {
+            for(int i = 0; i <= workers.Count; i++)
+            {
+                var worker = _workerStore.GetWorker(i);
+                var address = _workerStore.GetAddress(i);
+                //
+                if (worker != null && address != null)
+                {
+                    workerViewModel.WorkerDetailsViewModels.Add(new WorkerDetailsViewModel() {
+                        Worker = worker,
+                        Address = address,
+                        Title = $"MyTitle{i}",
+                        Header = $"MyHeader{i}"
+                    });
+                }                
+            }
+            return View(workerViewModel);
+        }
+        return View();
     }
 }

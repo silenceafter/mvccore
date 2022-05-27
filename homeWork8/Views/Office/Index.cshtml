@@ -1,18 +1,12 @@
-@model WorkerViewModel
+@model WorkerDetailsViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>"MyHeadTitle"</title>
+    <title>@Model.Title</title>
 </head>
 <body>
-    <div>@Model.WorkerDetailsViewModels[0].Worker.LastName</div>
-    @{
-        /*foreach (var viewModel in @Model.WorkerDetailsViewModels)
-        {
-            <h1>"Header here"</h1>
-            <div>
-                @viewModel.Worker.FirstName + " " + @viewModel.Worker.LastName
-            </div>
-        }*/        
-    }
+    <h4>@Model.Header</h4>
+    <div>
+        Id : @Model.Worker.Id, @Model.Worker.FirstName @Model.Worker.LastName
+    </div>
 </body>
 </html>
