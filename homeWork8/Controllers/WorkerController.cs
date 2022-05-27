@@ -13,39 +13,6 @@ public class WorkerController: Controller
 
     public ViewResult Index()
     {
-        /*ViewBag.Title = "";
-        ViewBag.Header = "";
-
-        var workerViewModel = new WorkerViewModel();
-        workerViewModel.WorkerDetailsViewModels = new List<WorkerDetailsViewModel>();
-        //
-        var workersStore = new WorkersStore();
-        if (workersStore is not null)
-        {
-            for(int i = 0; i <= 5; i++)
-            {
-                var worker = _dataStorage.GetWorker(i);
-                if (worker is not null)
-                {
-                    var address = _dataStorage.GetAddress(i);
-                    if (address is not null) 
-                    {
-                        workersStore.AddWorker(worker);
-                        workersStore.AddAddress(address);
-
-                        //viewModel
-                        var viewModel = new WorkerDetailsViewModel() {
-                            Worker = worker,
-                            Address = address,
-                            Title = $"MyTitle{i}",
-                            Header = $"MyHeader{i}"
-                        }; 
-                        workerViewModel.WorkerDetailsViewModels.Add(viewModel);
-                    }                    
-                }
-            }
-        }
-        return View(workerViewModel);*/
         return View();
     }
 
