@@ -1,14 +1,15 @@
 @model MessageViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>"MyHeadTitle"</title>
+    <title></title>
 </head>
 <body>
+    <!--<b>Html.DisplayFor(modelItem => viewModel.MessageModel.FromId)</b>-->
     @{
         foreach (var viewModel in @Model.MessageDetailsViewModels)
         {
             //<h1>"Header here"</h1>
-            <div>
+            <div>                
                 <b>Id:</b> @viewModel.MessageModel.Id, <br>
                 <b>FromId:</b> @viewModel.MessageModel.FromId , <br> 
                 <b>ToId:</b> @viewModel.MessageModel.ToId, <br>

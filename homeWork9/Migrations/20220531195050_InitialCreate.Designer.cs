@@ -11,7 +11,7 @@ using homeWork9.Models;
 namespace homeWork9.Migrations
 {
     [DbContext(typeof(MessageContext))]
-    [Migration("20220531000143_InitialCreate")]
+    [Migration("20220531195050_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,23 @@ namespace homeWork9.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("homeWork9.Models.ContactModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts", "email");
+                });
 
             modelBuilder.Entity("homeWork9.Models.MessageModel", b =>
                 {
@@ -52,17 +69,6 @@ namespace homeWork9.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages", "email");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Body = "MyBody",
-                            FromId = 1,
-                            IsHtml = false,
-                            Theme = "MyTheme",
-                            ToId = 1
-                        });
                 });
 #pragma warning restore 612, 618
         }

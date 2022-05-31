@@ -22,6 +22,23 @@ namespace homeWork9.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("homeWork9.Models.ContactModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts", "email");
+                });
+
             modelBuilder.Entity("homeWork9.Models.MessageModel", b =>
                 {
                     b.Property<int>("Id")
@@ -50,17 +67,6 @@ namespace homeWork9.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages", "email");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Body = "MyBody",
-                            FromId = 1,
-                            IsHtml = false,
-                            Theme = "MyTheme",
-                            ToId = 1
-                        });
                 });
 #pragma warning restore 612, 618
         }

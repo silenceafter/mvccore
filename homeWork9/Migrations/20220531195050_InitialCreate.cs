@@ -13,6 +13,20 @@ namespace homeWork9.Migrations
                 name: "email");
 
             migrationBuilder.CreateTable(
+                name: "Contacts",
+                schema: "email",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EmailAddress = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 schema: "email",
                 columns: table => new
@@ -29,16 +43,14 @@ namespace homeWork9.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                 });
-
-            migrationBuilder.InsertData(
-                schema: "email",
-                table: "Messages",
-                columns: new[] { "Id", "Body", "FromId", "IsHtml", "Theme", "ToId" },
-                values: new object[] { 1, "MyBody", 1, false, "MyTheme", 1 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Contacts",
+                schema: "email");
+
             migrationBuilder.DropTable(
                 name: "Messages",
                 schema: "email");
