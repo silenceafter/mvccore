@@ -4,7 +4,7 @@ namespace homeWork9.Models;
 
 public class MessageContext : DbContext
 {
-    public DbSet<MessageModel> Messages { get; set; }
+    public DbSet<MessageModel> Messages { get; private set; }
     public MessageContext(DbContextOptions<MessageContext> options):base(options)
     {
     }
@@ -25,5 +25,5 @@ public class MessageContext : DbContext
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=usersdb;Username=postgres;Password=здесь_указывается_пароль_от_postgres");
-    }*/      
+    }*/
 }

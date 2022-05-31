@@ -11,7 +11,7 @@ using homeWork9.Models;
 namespace homeWork9.Migrations
 {
     [DbContext(typeof(MessageContext))]
-    [Migration("20220529191855_InitialCreate")]
+    [Migration("20220531000143_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
