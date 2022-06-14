@@ -21,7 +21,8 @@ public class ContactController : Controller
         return View();
     }
 
-    public ViewResult Create()
+    //[HttpPost]
+    public ViewResult Create(string emailaddress)
     {
         return View();
     }
