@@ -1,7 +1,8 @@
-using System;
-using System.Collections.Generic;
+using homeWork9.Controllers.Requests;
 using homeWork9.Models;
 using homeWork9.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
 namespace homeWork9.Repositories;
 
 public class ContactRepository : IContactRepository
@@ -13,9 +14,25 @@ public class ContactRepository : IContactRepository
         _context = context;
     }
 
-    public void RegisterContact()
+    public bool RegisterContact(ContactRequest contact)
     {
-        return;
+        if (contact is not null)
+        {
+            try 
+            {
+                _context.Contacts.Add(new ContactModel()
+                {
+                    EmailAddress = contact.EmailAddress
+                });
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                //logger
+            }
+            return true;            
+        }        
+        return false;
     }
 
     public ContactModel? GetContact(int Id)

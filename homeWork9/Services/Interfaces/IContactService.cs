@@ -1,11 +1,13 @@
+using homeWork9.Controllers.Requests;
+using homeWork9.Models;
+using homeWork9.ViewModels;
 using System;
 using System.Collections.Generic;
-using homeWork9.Models;
 namespace homeWork9.Services.Interfaces;
 
 public interface IContactService
 {
-    public void RegisterContact();
+    public bool RegisterContact(ContactRequest contact);
     public ContactModel? GetContact(int Id);
     public List<ContactModel>? GetContactAll();
 }

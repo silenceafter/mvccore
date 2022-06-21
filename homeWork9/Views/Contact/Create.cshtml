@@ -1,4 +1,3 @@
-@page
 @model homeWork9.ViewModels.ContactDetailsViewModel
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,10 +6,10 @@
 </head>
 <body>
     <h4>"Header here"</h4>
-    <form method="post">
+    <form method="POST">
         <label for="Name">contact emailaddress:</label>
-        <input type="text" name="emailaddress" value="" /><br>        
-        <input asp-controller="Contact" asp-action="Create" type="submit" value="submit"/>        
+        <input type="text" asp-for="Contact.EmailAddress" name="emailaddress" value="" /><br>        
+        <input asp-action="Create" type="submit" value="submit"/>
     </form>
     <br>        
 </body>
