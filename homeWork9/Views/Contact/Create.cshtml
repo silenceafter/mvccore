@@ -1,0 +1,16 @@
+@model homeWork9.ViewModels.ContactDetailsViewModel
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h4>"Header here"</h4>
+    <form method="POST">
+        <label for="Name">contact emailaddress:</label>
+        <input type="text" asp-for="Contact.EmailAddress" name="emailaddress" value="" /><br>        
+        <input asp-action="Create" type="submit" value="submit"/>
+    </form>
+    <br>        
+</body>
+</html>
