@@ -18,31 +18,31 @@ public class ContactController : Controller
         _service = service;
     }
 
-    //[HttpGet]
+    [HttpGet]
     public ViewResult Index(string? emailaddress)
     {
         return View();
     }
 
-    [HttpPost]
+    //[HttpPost]
     public async Task<ViewResult> Create([Bind("emailaddress")] string emailaddress)
     {
         if (ModelState.IsValid) {
-            /*var contactRequest = new ContactRequest()
+            var contactRequest = new ContactRequest()
             {
                 EmailAddress = emailaddress
             };
 
-            _service.RegisterContact(contactRequest);*/
-            //if (_service.RegisterContact(contactRequest)) 
-            //{
+            //_service.RegisterContact(contactRequest);
+            if (_service.RegisterContact(contactRequest)) 
+            {
                 /*var viewModel = new ContactViewModel()
                 {
                     ContactDetailsViewModels = new List<ContactDetailsViewModel>()
-                };
+                };*/
 
-                var contacts = _service.GetContactAll();*/
-            //}
+                var contacts = _service.GetContactAll();
+            }
             //return RedirectToAction("Index", "Contact", new { emailaddress = emailaddress });//return RedirectToAction("Index", "Contact", null);
         }
         return View();

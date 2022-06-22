@@ -7,6 +7,7 @@ namespace homeWork9.Models;
 
 public class ContactModel
 {
-    public int Id { get; set; }
+    public int Id { get; set; } 
+    [BindProperty]   
     public string EmailAddress { get; set; }
 }

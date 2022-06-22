@@ -36,6 +36,9 @@ namespace homeWork9.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmailAddress")
+                        .IsUnique();
+
                     b.ToTable("Contacts", "email");
                 });
 

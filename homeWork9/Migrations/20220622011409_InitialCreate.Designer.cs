@@ -11,7 +11,7 @@ using homeWork9.Models;
 namespace homeWork9.Migrations
 {
     [DbContext(typeof(MessageContext))]
-    [Migration("20220531195050_InitialCreate")]
+    [Migration("20220622011409_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace homeWork9.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique();
 
                     b.ToTable("Contacts", "email");
                 });

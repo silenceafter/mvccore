@@ -43,6 +43,13 @@ namespace homeWork9.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_EmailAddress",
+                schema: "email",
+                table: "Contacts",
+                column: "EmailAddress",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

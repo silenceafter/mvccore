@@ -22,6 +22,9 @@ public class MessageContext : DbContext
         modelBuilder.Entity<ContactModel>().ToTable("Contacts").Property(b => b.Id)
             .ValueGeneratedOnAdd();
 
+        modelBuilder.Entity<ContactModel>().HasIndex(b => b.EmailAddress)
+            .IsUnique();
+
         //messages data
         /*modelBuilder.Entity<MessageModel>().HasData(
             new MessageModel() { Id = 1, FromId = 1, ToId = 1, Theme = "MyTheme", Body = "MyBody", IsHtml = false });
