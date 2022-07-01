@@ -7,7 +7,9 @@
 <body>
     <h4>"Header here"</h4>
     @{
-        foreach (var viewModel in @Model.ContactDetailsViewModels)
+        var tt = @Model.ContactDetailsViewModels;
+        var gg = 5;
+        /*foreach (var viewModel in @Model.ContactDetailsViewModels)
         {
             //<h1>"Header here"</h1>
             <div>                
@@ -15,7 +17,7 @@
                 <b>FromId:</b> @viewModel.Contact.EmailAddress <br>
             </div>
             <br>
-        }        
+        }*/        
     }
     <br>        
 </body>

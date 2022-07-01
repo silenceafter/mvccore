@@ -19,8 +19,29 @@ public class ContactController : Controller
     }
 
     [HttpGet]
-    public ViewResult Index(string? emailaddress)
+    public ViewResult Index()
     {
+        var contacts = _service.GetContactAll();
+        ContactViewModel viewModel = new ContactViewModel();
+
+        if (contacts != null)
+        {
+            foreach(var contact in contacts)
+            {
+                viewModel.ContactDetailsViewModels.Add(
+                    new ContactDetailsViewModel()
+                    {
+                        Contact = new ContactModel()
+                        {
+                            Id = contact.Id,
+                            EmailAddress = contact.EmailAddress
+                        },
+                        Header = "",
+                        Title = ""
+                    });
+            }
+            return View(viewModel);
+        }
         return View();
     }
 
@@ -32,18 +53,34 @@ public class ContactController : Controller
             {
                 EmailAddress = emailaddress
             };
-
-            //_service.RegisterContact(contactRequest);
+            
+            ContactViewModel viewModel = new ContactViewModel()
+            {
+                ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+            };
+            //
             if (_service.RegisterContact(contactRequest)) 
             {
-                /*var viewModel = new ContactViewModel()
-                {
-                    ContactDetailsViewModels = new List<ContactDetailsViewModel>()
-                };*/
-
                 var contacts = _service.GetContactAll();
+                if (contacts != null)
+                {
+                    foreach(var contact in contacts)
+                    {
+                        viewModel.ContactDetailsViewModels.Add(
+                            new ContactDetailsViewModel()
+                            {
+                                Contact = new ContactModel()
+                                {
+                                    Id = contact.Id,
+                                    EmailAddress = contact.EmailAddress
+                                },
+                                Header = "",
+                                Title = ""
+                            });
+                    }
+                }            
             }
-            //return RedirectToAction("Index", "Contact", new { emailaddress = emailaddress });//return RedirectToAction("Index", "Contact", null);
+            return View("All", viewModel);
         }
         return View();
     }
