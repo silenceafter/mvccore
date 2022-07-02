@@ -22,10 +22,13 @@ public class ContactController : Controller
     public ViewResult Index()
     {
         var contacts = _service.GetContactAll();
-        ContactViewModel viewModel = new ContactViewModel();
-
-        if (contacts != null)
+        if (contacts is not null)
         {
+            ContactViewModel viewModel = new ContactViewModel()
+            {
+                ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+            };
+            //
             foreach(var contact in contacts)
             {
                 viewModel.ContactDetailsViewModels.Add(
@@ -82,6 +85,24 @@ public class ContactController : Controller
             }
             return View("All", viewModel);
         }
+        return View();
+    }
+
+    [HttpGet]
+    public ViewResult Edit(int id)
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public ViewResult Edit(string? yy, string? tt)
+    {
+        return View();
+    }
+
+    [HttpPut]
+    public ViewResult Edit(string? jj)
+    {
         return View();
     }
 }

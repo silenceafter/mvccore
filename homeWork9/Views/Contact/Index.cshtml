@@ -5,14 +5,13 @@
     <title></title>
 </head>
 <body>
-    <h4>"Header here"</h4>
+    <h4>email addresses</h4>
     @{
         foreach (var viewModel in @Model.ContactDetailsViewModels)
         {
             //<h1>"Header here"</h1>
             <div>                
-                <b>Id:</b> @viewModel.Contact.Id, <br>
-                <b>FromId:</b> @viewModel.Contact.EmailAddress <br>
+                @viewModel.Contact.EmailAddress <br>
             </div>
             <br>
         }        

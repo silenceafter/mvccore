@@ -5,20 +5,20 @@
     <title></title>
 </head>
 <body>
-    <h4>"Header here"</h4>
-    @{
-        var tt = @Model.ContactDetailsViewModels;
-        var gg = 5;
-        /*foreach (var viewModel in @Model.ContactDetailsViewModels)
+    <h4>email addresses</h4>
+    <form method="post">
+    @{        
+        foreach (var viewModel in @Model.ContactDetailsViewModels)
         {
             //<h1>"Header here"</h1>
             <div>                
-                <b>Id:</b> @viewModel.Contact.Id, <br>
-                <b>FromId:</b> @viewModel.Contact.EmailAddress <br>
+                @viewModel.Contact.EmailAddress
+                <a asp-controller="Contact" asp-action="Edit">Edit</a>
             </div>
             <br>
-        }*/        
+        }        
     }
+    </form>
     <br>        
 </body>
 </html>
