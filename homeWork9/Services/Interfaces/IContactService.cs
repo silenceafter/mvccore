@@ -8,6 +8,7 @@ namespace homeWork9.Services.Interfaces;
 public interface IContactService
 {
     public bool RegisterContact(ContactRequest contact);
-    public ContactModel? GetContact(int Id);
+    public bool UpdateContact(int id, string emailaddress);
+    public ContactModel? GetContact(int id);
     public List<ContactModel>? GetContactAll();
 }

@@ -24,8 +24,15 @@ public class ContactService : IContactService
         return _repository.RegisterContact(contact);
     }
 
-    public ContactModel? GetContact(int Id)
+    public bool UpdateContact(int id, string emailaddress)
     {
+        return _repository.UpdateContact(id, emailaddress);        
+    }
+
+    public ContactModel? GetContact(int id)
+    {
+        if (id > 0)
+            return _repository.GetContact(id);
         return null;
     }
 

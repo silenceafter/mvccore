@@ -7,6 +7,8 @@ namespace homeWork9.Repositories.Interfaces;
 public interface IContactRepository
 {
     public bool RegisterContact(ContactRequest contact);
-    public ContactModel? GetContact(int Id);
+    public bool UpdateContact(int id, string emailaddress);
+    public ContactModel? GetContact(int id);
+    public ContactModel? GetContact (string emailaddress);
     public List<ContactModel>? GetContactAll();
 }

@@ -91,12 +91,60 @@ public class ContactController : Controller
     [HttpGet]
     public ViewResult Edit(int id)
     {
+        if (id > 0)
+        {
+            var contact = _service.GetContact(id);
+            if (contact is not null) 
+            {
+                ContactDetailsViewModel viewModel = new ContactDetailsViewModel()
+                {
+                    Contact = new ContactModel()
+                    {
+                        Id = contact.Id,
+                        EmailAddress = contact.EmailAddress                
+                    },
+                    Header = "",
+                    Title = ""
+                };
+                return View(viewModel);
+            }
+        }
         return View();
     }
 
     [HttpPost]
-    public ViewResult Edit(string? yy, string? tt)
+    public async Task<ViewResult> Edit(int id, [Bind("emailaddress")] string emailaddress)
     {
+        if (id > 0 && emailaddress.Trim() != "")
+        {
+            if (_service.UpdateContact(id, emailaddress))
+            {
+                ContactViewModel viewModel = new ContactViewModel()
+                {
+                    ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+                };
+                //
+                var contacts = _service.GetContactAll();
+                if (contacts != null)
+                {
+                    foreach(var contact in contacts)
+                    {
+                        viewModel.ContactDetailsViewModels.Add(
+                            new ContactDetailsViewModel()
+                            {
+                                Contact = new ContactModel()
+                                {
+                                    Id = contact.Id,
+                                    EmailAddress = contact.EmailAddress
+                                },
+                                Header = "",
+                                Title = ""
+                            });
+                    }
+                }
+                return View("All", viewModel);
+            }
+        }
         return View();
     }
 

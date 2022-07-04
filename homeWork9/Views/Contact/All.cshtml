@@ -13,7 +13,7 @@
             //<h1>"Header here"</h1>
             <div>                
                 @viewModel.Contact.EmailAddress
-                <a asp-controller="Contact" asp-action="Edit">Edit</a>
+                <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
             </div>
             <br>
         }        
