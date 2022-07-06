@@ -56,6 +56,20 @@ public class ContactRepository : IContactRepository
         return false;
     }
 
+    public bool DeleteContact(int id)
+    {
+        var contact = _context.Contacts
+            .Where(row => row.Id == id)
+            .SingleOrDefault();
+        if (contact is not null)
+        {
+            _context.Contacts.Remove(contact);
+            _context.SaveChanges();
+            return true;
+        }
+        return false;
+    }
+
     public ContactModel? GetContact(int id)
     {
         return _context.Contacts

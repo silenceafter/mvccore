@@ -148,9 +148,38 @@ public class ContactController : Controller
         return View();
     }
 
-    [HttpPut]
-    public ViewResult Edit(string? jj)
+    public async Task<ViewResult> Delete(int id)
     {
-        return View();
+        if (id > 0)
+        {
+            if (_service.DeleteContact(id))
+            {
+                ContactViewModel viewModel = new ContactViewModel()
+                {
+                    ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+                };
+                //
+                var contacts = _service.GetContactAll();
+                if (contacts != null)
+                {
+                    foreach(var contact in contacts)
+                    {
+                        viewModel.ContactDetailsViewModels.Add(
+                            new ContactDetailsViewModel()
+                            {
+                                Contact = new ContactModel()
+                                {
+                                    Id = contact.Id,
+                                    EmailAddress = contact.EmailAddress
+                                },
+                                Header = "",
+                                Title = ""
+                            });
+                    }
+                }
+                return View("All", viewModel);
+            }
+        }
+        return View("Index");//error
     }
 }

@@ -29,6 +29,11 @@ public class ContactService : IContactService
         return _repository.UpdateContact(id, emailaddress);        
     }
 
+    public bool DeleteContact(int id)
+    {
+        return _repository.DeleteContact(id);
+    }
+
     public ContactModel? GetContact(int id)
     {
         if (id > 0)

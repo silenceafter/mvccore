@@ -9,6 +9,7 @@ public interface IContactService
 {
     public bool RegisterContact(ContactRequest contact);
     public bool UpdateContact(int id, string emailaddress);
+    public bool DeleteContact(int id);
     public ContactModel? GetContact(int id);
     public List<ContactModel>? GetContactAll();
 }
