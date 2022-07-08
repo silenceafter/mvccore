@@ -2,20 +2,27 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <title>Contacts</title>
 </head>
 <body>
-    <h4>email addresses</h4>
-    @{
+    <h4>email addresses</h4><br>
+    <label for="Name">search emailaddress:</label>
+    <input type="text" asp-route-id="" name="emailaddress" value="" /><br>        
+    <input asp-action="Search" type="submit" value="search"/>
+
+    <form method="post">
+    @{        
         foreach (var viewModel in @Model.ContactDetailsViewModels)
         {
             //<h1>"Header here"</h1>
             <div>                
-                @viewModel.Contact.EmailAddress <br>
+                @viewModel.Contact.EmailAddress
+                <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
             </div>
             <br>
         }        
     }
+    </form>
     <br>        
 </body>
 </html>
