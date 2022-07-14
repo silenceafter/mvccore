@@ -11,5 +11,6 @@ public interface IContactService
     public bool UpdateContact(int id, string emailaddress);
     public bool DeleteContact(int id);
     public ContactModel? GetContact(int id);
+    public ContactModel? GetContact(string emailaddress);
     public List<ContactModel>? GetContactAll();
 }

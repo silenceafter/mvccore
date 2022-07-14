@@ -6,9 +6,12 @@
 </head>
 <body>
     <h4>email addresses</h4><br>
-    <label for="Name">search emailaddress:</label>
-    <input type="text" asp-route-id="" name="emailaddress" value="" /><br>        
-    <input asp-action="Search" type="submit" value="search"/>
+    @using (Html.BeginForm("Search","Contact"))
+    {
+        <label for="Name">search emailaddress:</label>
+        <input type="text" asp-route-id="" name="emailaddress" value="" /><br> 
+        <input type="submit" value="search" /><br>
+    }  
 
     <form method="post">
     @{        

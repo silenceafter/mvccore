@@ -41,6 +41,13 @@ public class ContactService : IContactService
         return null;
     }
 
+    public ContactModel? GetContact(string emailaddress)
+    {
+        if (emailaddress.Trim() != "")
+            return _repository.GetContact(emailaddress);
+        return null;
+    }
+
     public List<ContactModel>? GetContactAll()
     {
         return _repository.GetContactAll();

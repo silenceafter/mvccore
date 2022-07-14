@@ -182,4 +182,27 @@ public class ContactController : Controller
         }
         return View("Index");//error
     }
+
+    public async Task<ViewResult> Search([Bind("emailaddress")] string emailaddress)
+    {
+        if (emailaddress.Trim() != "")
+        {
+            var contact = _service.GetContact(emailaddress);
+            if (contact is not null)
+            {                
+                ContactDetailsViewModel viewModel = new ContactDetailsViewModel()
+                {
+                    Contact = new ContactModel()
+                    {
+                        Id = contact.Id,
+                        EmailAddress = contact.EmailAddress
+                    },
+                    Header = "",
+                    Title = ""
+                };                
+                return View("Search", viewModel);        
+            }
+        }
+        return View();
+    }
 }
