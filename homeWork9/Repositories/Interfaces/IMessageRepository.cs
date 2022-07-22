@@ -6,6 +6,6 @@ namespace homeWork9.Repositories.Interfaces;
 public interface IMessageRepository
 {
     public void RegisterMessage();
-    public MessageModel? GetMessage(int Id);
+    public MessageModel? GetMessage(int contactId);
     public List<MessageModel>? GetMessageAll();
 }

@@ -18,10 +18,10 @@ public class MessageRepository : IMessageRepository
         return;
     }
 
-    public MessageModel? GetMessage(int Id)
+    public MessageModel? GetMessage(int contactId)
     {
         return _context.Messages
-            .Where(row => row.Id == Id)
+            .Where(row => row.ToId == contactId)
             .SingleOrDefault();
     }
 

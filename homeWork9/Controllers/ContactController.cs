@@ -18,37 +18,6 @@ public class ContactController : Controller
         _service = service;
     }
 
-    [HttpGet]
-    public ViewResult Index()
-    {
-        var contacts = _service.GetContactAll();
-        if (contacts is not null)
-        {
-            ContactViewModel viewModel = new ContactViewModel()
-            {
-                ContactDetailsViewModels = new List<ContactDetailsViewModel>()
-            };
-            //
-            foreach(var contact in contacts)
-            {
-                viewModel.ContactDetailsViewModels.Add(
-                    new ContactDetailsViewModel()
-                    {
-                        Contact = new ContactModel()
-                        {
-                            Id = contact.Id,
-                            EmailAddress = contact.EmailAddress
-                        },
-                        Header = "",
-                        Title = ""
-                    });
-            }
-            return View(viewModel);
-        }
-        return View();
-    }
-
-    //[HttpPost]
     public async Task<ViewResult> Create([Bind("emailaddress")] string emailaddress)
     {
         if (ModelState.IsValid) {
@@ -88,6 +57,41 @@ public class ContactController : Controller
         return View();
     }
 
+    public async Task<ViewResult> Delete(int id)
+        {
+            if (id > 0)
+            {
+                if (_service.DeleteContact(id))
+                {
+                    ContactViewModel viewModel = new ContactViewModel()
+                    {
+                        ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+                    };
+                    //
+                    var contacts = _service.GetContactAll();
+                    if (contacts != null)
+                    {
+                        foreach(var contact in contacts)
+                        {
+                            viewModel.ContactDetailsViewModels.Add(
+                                new ContactDetailsViewModel()
+                                {
+                                    Contact = new ContactModel()
+                                    {
+                                        Id = contact.Id,
+                                        EmailAddress = contact.EmailAddress
+                                    },
+                                    Header = "",
+                                    Title = ""
+                                });
+                        }
+                    }
+                    return View("All", viewModel);
+                }
+            }
+            return View("Index");//error
+        }
+   
     [HttpGet]
     public ViewResult Edit(int id)
     {
@@ -148,39 +152,34 @@ public class ContactController : Controller
         return View();
     }
 
-    public async Task<ViewResult> Delete(int id)
+    [HttpGet]
+    public ViewResult Index()
     {
-        if (id > 0)
+        var contacts = _service.GetContactAll();
+        if (contacts is not null)
         {
-            if (_service.DeleteContact(id))
+            ContactViewModel viewModel = new ContactViewModel()
             {
-                ContactViewModel viewModel = new ContactViewModel()
-                {
-                    ContactDetailsViewModels = new List<ContactDetailsViewModel>()
-                };
-                //
-                var contacts = _service.GetContactAll();
-                if (contacts != null)
-                {
-                    foreach(var contact in contacts)
+                ContactDetailsViewModels = new List<ContactDetailsViewModel>()
+            };
+            //
+            foreach(var contact in contacts)
+            {
+                viewModel.ContactDetailsViewModels.Add(
+                    new ContactDetailsViewModel()
                     {
-                        viewModel.ContactDetailsViewModels.Add(
-                            new ContactDetailsViewModel()
-                            {
-                                Contact = new ContactModel()
-                                {
-                                    Id = contact.Id,
-                                    EmailAddress = contact.EmailAddress
-                                },
-                                Header = "",
-                                Title = ""
-                            });
-                    }
-                }
-                return View("All", viewModel);
+                        Contact = new ContactModel()
+                        {
+                            Id = contact.Id,
+                            EmailAddress = contact.EmailAddress
+                        },
+                        Header = "",
+                        Title = ""
+                    });
             }
+            return View(viewModel);
         }
-        return View("Index");//error
+        return View();
     }
 
     public async Task<ViewResult> Search([Bind("emailaddress")] string emailaddress)
@@ -189,7 +188,7 @@ public class ContactController : Controller
         {
             var contact = _service.GetContact(emailaddress);
             if (contact is not null)
-            {                
+            {                           
                 ContactDetailsViewModel viewModel = new ContactDetailsViewModel()
                 {
                     Contact = new ContactModel()
@@ -199,10 +198,21 @@ public class ContactController : Controller
                     },
                     Header = "",
                     Title = ""
-                };                
-                return View("Search", viewModel);        
-            }
+                };
+                return View("Search", viewModel);
+            }            
         }
-        return View();
+
+        ContactDetailsViewModel viewModelEmpty = new ContactDetailsViewModel()
+        {
+            Contact = new ContactModel()
+            {
+                Id = 0,
+                EmailAddress = ""
+            },
+            Header = "",
+            Title = ""
+        };
+        return View("Search", viewModelEmpty);
     }
 }

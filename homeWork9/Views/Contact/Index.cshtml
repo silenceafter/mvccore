@@ -9,10 +9,11 @@
     @using (Html.BeginForm("Search","Contact"))
     {
         <label for="Name">search emailaddress:</label>
-        <input type="text" asp-route-id="" name="emailaddress" value="" /><br> 
+        <input type="text" asp-route-id="" name="emailaddress" value="" /> 
         <input type="submit" value="search" /><br>
     }  
 
+    <br>
     <form method="post">
     @{        
         foreach (var viewModel in @Model.ContactDetailsViewModels)
@@ -20,11 +21,11 @@
             //<h1>"Header here"</h1>
             <div>                
                 @viewModel.Contact.EmailAddress
-                <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
+                <a asp-controller="Message" asp-action="Create" asp-route-id="@viewModel.Contact.Id">Send</a> | <a asp-controller="Message" asp-action="Index" asp-route-id="@viewModel.Contact.Id">Messages</a> | <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
             </div>
             <br>
-        }        
-    }
+        }
+    }   <a asp-controller="Contact" asp-action="Create">add</a>
     </form>
     <br>        
 </body>

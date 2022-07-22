@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using homeWork9.Models;
 using homeWork9.Services;
 using homeWork9.Services.Interfaces;
+using homeWork9.ViewModels;
 namespace homeWork9.Controllers;
 
 public class MessageController : Controller
@@ -16,46 +17,40 @@ public class MessageController : Controller
         _service = service;
     }
 
-    public ViewResult Index()
+    [HttpGet]
+    public ViewResult Index([Bind("toid")] int toId)
     {
-        var messageViewModel = new MessageViewModel();
-        messageViewModel.MessageDetailsViewModels = new List<MessageDetailsViewModel>();
-        //
-        var messages = _service.GetMessageAll();
-        if (messages is not null)
+        if (toId > 0)
         {
-            foreach(var message in messages)
+            var message = _service.GetMessage(toId);
+            /*if (message is not null)
             {
-                messageViewModel.MessageDetailsViewModels.Add(new MessageDetailsViewModel()
+                MessageViewModel viewModel = new MessageViewModel()
                 {
-                    MessageModel = message,
-                    Title = "Title from controller",
-                    Header = "Header from controller"
-                });
-            }
-            return View(messageViewModel);
-        }
-        
-        /*var workers = _workerStore.GetWorkerAll();
-        if (workers != null)
-        {
-            for(int i = 0; i <= workers.Count; i++)
-            {
-                var worker = _workerStore.GetWorker(i);
-                var address = _workerStore.GetAddress(i);
+                    MessageDetailsViewModels = new List<MessageDetailsViewModel>()
+                };
                 //
-                if (worker != null && address != null)
+                foreach(var message in messages)
                 {
-                    workerViewModel.WorkerDetailsViewModels.Add(new WorkerDetailsViewModel() {
-                        Worker = worker,
-                        Address = address,
-                        Title = $"MyTitle{i}",
-                        Header = $"MyHeader{i}"
-                    });
-                }                
-            }
-            return View(workerViewModel);
-        }*/
+                    viewModel.MessageDetailsViewModels.Add(
+                        new MessageDetailsViewModel()
+                        {
+                            Message = new MessageModel()
+                            {
+                                Id = message.Id,
+                                FromId = message.FromId,
+                                ToId = message.ToId,
+                                Theme = message.Theme,
+                                Body = message.Body,
+                                IsHtml = message.IsHtml
+                            },
+                            Header = "",
+                            Title = ""
+                        });
+                }
+                return View(viewModel);
+            }*/
+        }    
         return View();
     }
 

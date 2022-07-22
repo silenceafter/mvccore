@@ -1,5 +1,5 @@
 using homeWork9.Models;
-namespace homeWork9;
+namespace homeWork9.ViewModels;
 
 public class MessageViewModel
 {

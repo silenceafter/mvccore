@@ -20,9 +20,9 @@ public class MessageService : IMessageService
 
     }
 
-    public MessageModel? GetMessage(int Id)
+    public MessageModel? GetMessage(int contactId)
     {
-        return _repository.GetMessage(Id);
+        return _repository.GetMessage(contactId);
     }
 
     public List<MessageModel>? GetMessageAll()

@@ -1,9 +1,9 @@
 using homeWork9.Models;
-namespace homeWork9;
+namespace homeWork9.ViewModels;
 
 public class MessageDetailsViewModel
 {
-    public MessageModel MessageModel { get; set; }
+    public MessageModel Message { get; set; }
     public string Title { get; set; }
     public string Header { get; set; }
 }
