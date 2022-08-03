@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using homeWork9.Controllers.Requests;
 using homeWork9.Models;
 using homeWork9.Repositories;
 using homeWork9.Repositories.Interfaces;
@@ -15,18 +16,20 @@ public class MessageService : IMessageService
         _repository = repository;
     }
 
-    public void RegisterMessage()
+    public bool RegisterMessage(MessageRequest message)
     {
-
+        if (message is null)
+            return false;
+        return _repository.RegisterMessage(message);
     }
 
-    public MessageModel? GetMessage(int contactId)
+    public MessageModel? GetMessage(int contactId, int messageId)
     {
-        return _repository.GetMessage(contactId);
+        return _repository.GetMessage(contactId, messageId);
     }
 
-    public List<MessageModel>? GetMessageAll()
+    public List<MessageModel>? GetMessageAll(int contactId)
     {
-        return _repository.GetMessageAll();        
+        return _repository.GetMessageAll(contactId);        
     }
 }

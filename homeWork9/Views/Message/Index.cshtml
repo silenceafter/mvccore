@@ -1,0 +1,31 @@
+@model homeWork9.ViewModels.MessageViewModel
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Messages for the contact</title>
+</head>
+<body>
+    <br>
+    <form method="post">
+    @{
+        int cnt = 1;
+        <a asp-controller="Contact" asp-action="Index">back</a>        
+        foreach (var viewModel in @Model.MessageDetailsViewModels)
+        {
+            //<h1>"Header here"</h1>
+            <div>
+                @cnt<br>
+                From: @viewModel.FromName<br>
+                To: @viewModel.ToName<br>
+                Theme: @viewModel.Message.Theme<br>
+                Body: @viewModel.Message.Body<br>
+                IsHtml: @viewModel.Message.IsHtml<br>
+            </div>
+            <br>
+            cnt++;
+        }
+    }
+    </form>
+    <br>        
+</body>
+</html>

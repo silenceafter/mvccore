@@ -1,7 +1,8 @@
-using System;
-using System.Collections.Generic;
+using homeWork9.Controllers.Requests;
 using homeWork9.Models;
 using homeWork9.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
 namespace homeWork9.Repositories;
 
 public class MessageRepository : IMessageRepository
@@ -13,20 +14,41 @@ public class MessageRepository : IMessageRepository
         _context = context;
     }
 
-    public void RegisterMessage()
+    public bool RegisterMessage(MessageRequest message)
     {
-        return;
+        /*if (message is not null)
+        {
+            try 
+            {
+                if (GetMessage(message.F) is null)
+                {
+                    _context.Contacts.Add(new ContactModel()
+                    {
+                        EmailAddress = contact.EmailAddress
+                    });
+                    _context.SaveChanges();
+                }                
+            }
+            catch(Exception ex)
+            {
+                //logger
+            }
+            return true;            
+        }*/       
+        return false;
     }
 
-    public MessageModel? GetMessage(int contactId)
+    public MessageModel? GetMessage(int contactId, int messageId)
     {
         return _context.Messages
-            .Where(row => row.ToId == contactId)
+            .Where(row => row.ToId == contactId && row.Id == messageId)
             .SingleOrDefault();
     }
 
-    public List<MessageModel>? GetMessageAll()
+    public List<MessageModel>? GetMessageAll(int contactId)
     {
-        return _context.Messages.ToList();
+        return _context.Messages
+            .Where(row => row.ToId == contactId || row.FromId == contactId)
+            .ToList();
     }
 }

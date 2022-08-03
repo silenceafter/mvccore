@@ -1,11 +1,12 @@
+using homeWork9.Controllers.Requests;
+using homeWork9.Models;
 using System;
 using System.Collections.Generic;
-using homeWork9.Models;
 namespace homeWork9.Services.Interfaces;
 
 public interface IMessageService
 {
-    public void RegisterMessage();
-    public MessageModel? GetMessage(int contactId);
-    public List<MessageModel>? GetMessageAll();
+    public bool RegisterMessage(MessageRequest message);
+    public MessageModel? GetMessage(int contactId, int messageId);
+    public List<MessageModel>? GetMessageAll(int contactId);
 }
