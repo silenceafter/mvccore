@@ -15,6 +15,7 @@ public class MessageContext : DbContext
         base.OnModelCreating(modelBuilder);
         //modelBuilder.UseIdentityColumns();
         modelBuilder.HasDefaultSchema("email");
+
         //messages
         modelBuilder.Entity<MessageModel>().ToTable("Messages").Property(b => b.Id)
             .ValueGeneratedOnAdd();
@@ -25,23 +26,16 @@ public class MessageContext : DbContext
         modelBuilder.Entity<ContactModel>().HasIndex(b => b.EmailAddress)
             .IsUnique();
 
-        //messages data
-        /*modelBuilder.Entity<MessageModel>().HasData(
-            new MessageModel() { Id = 1, FromId = 1, ToId = 1, Theme = "MyTheme", Body = "MyBody", IsHtml = false });
-        
         //contacts data
         modelBuilder.Entity<ContactModel>().HasData(
-            new ContactModel() { Id = 1, EmailAddress = "address1@mail.ru" });
+            new ContactModel() { Id = 1, EmailAddress = "a59-info@yandex.ru" });
         modelBuilder.Entity<ContactModel>().HasData(
-            new ContactModel() { Id = 2, EmailAddress = "address2@mail.ru" });
+            new ContactModel() { Id = 2, EmailAddress = "silenceafter@yandex.ru" });
         modelBuilder.Entity<ContactModel>().HasData(
-            new ContactModel() { Id = 3, EmailAddress = "address3@mail.ru" });
+            new ContactModel() { Id = 3, EmailAddress = "axasthur89@mail.ru" });
         modelBuilder.Entity<ContactModel>().HasData(
-            new ContactModel() { Id = 4, EmailAddress = "address4@mail.ru" });*/
+            new ContactModel() { Id = 4, EmailAddress = "a8959@mail.ru" });
+        modelBuilder.Entity<ContactModel>().HasData(
+            new ContactModel() { Id = 5, EmailAddress = "a25031992@gmail.com" });
     }
-
-    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=usersdb;Username=postgres;Password=здесь_указывается_пароль_от_postgres");
-    }*/
 }

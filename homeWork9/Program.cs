@@ -18,7 +18,10 @@ builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddTransient<IContactService, ContactService>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 builder.Services.AddTransient<IContactRepository, ContactRepository>();
-builder.Services.AddDbContext<MessageContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=messagesdb;Username=postgres;Password=bdw"));
+builder.Services.AddDbContext<MessageContext>(
+    options => options
+        .UseNpgsql("Host=localhost;Port=5432;Database=messagesdb;Username=postgres;Password=bdw")
+);
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

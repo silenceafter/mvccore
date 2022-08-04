@@ -18,8 +18,6 @@ public class MessageService : IMessageService
 
     public bool RegisterMessage(MessageRequest message)
     {
-        if (message is null)
-            return false;
         return _repository.RegisterMessage(message);
     }
 

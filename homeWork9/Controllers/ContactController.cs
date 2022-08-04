@@ -52,7 +52,7 @@ public class ContactController : Controller
                     }
                 }            
             }
-            return View("All", viewModel);
+            return View("Index", viewModel);//All
         }
         return View();
     }

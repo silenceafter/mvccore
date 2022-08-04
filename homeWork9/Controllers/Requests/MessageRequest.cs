@@ -4,8 +4,8 @@ namespace homeWork9.Controllers.Requests;
     
 public class MessageRequest
 {
-    public int FromId { get; set; }
-    public int ToId { get; set; }
+    public string FromName { get; set; }
+    public string ToName { get; set; }
     public string Theme { get; set; }
     public string Body { get; set; }
     public bool IsHtml { get; set; }

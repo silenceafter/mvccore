@@ -16,25 +16,22 @@ public class MessageRepository : IMessageRepository
 
     public bool RegisterMessage(MessageRequest message)
     {
-        /*if (message is not null)
+        /*try 
         {
-            try 
+            if (_co)
             {
-                if (GetMessage(message.F) is null)
+                _context.Contacts.Add(new ContactModel()
                 {
-                    _context.Contacts.Add(new ContactModel()
-                    {
-                        EmailAddress = contact.EmailAddress
-                    });
-                    _context.SaveChanges();
-                }                
-            }
-            catch(Exception ex)
-            {
-                //logger
-            }
-            return true;            
-        }*/       
+                    EmailAddress = contact.EmailAddress
+                });
+                _context.SaveChanges();
+            }                
+        }
+        catch(Exception ex)
+        {
+            //logger
+        }
+        return true;*/
         return false;
     }
 
