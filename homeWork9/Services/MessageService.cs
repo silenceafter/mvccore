@@ -16,7 +16,7 @@ public class MessageService : IMessageService
         _repository = repository;
     }
 
-    public bool RegisterMessage(MessageRequest message)
+    public bool RegisterMessage(MessageModel message)
     {
         return _repository.RegisterMessage(message);
     }
@@ -29,5 +29,10 @@ public class MessageService : IMessageService
     public List<MessageModel>? GetMessageAll(int contactId)
     {
         return _repository.GetMessageAll(contactId);        
+    }
+
+    public List<MessageModel>? GetMessageAll(int contactId, int messageTypeId)
+    {
+        return _repository.GetMessageAll(contactId, messageTypeId);        
     }
 }

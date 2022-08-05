@@ -12,24 +12,27 @@ public class MessageController : Controller
     private readonly ILogger<MessageController> _logger;
     private readonly IMessageService _messageService;
     private readonly IContactService _contactService;
+    private readonly IMessageTypeService _messageTypeService;
 
     public MessageController(
         ILogger<MessageController> logger, 
         IMessageService messageService, 
-        IContactService contactService)
+        IContactService contactService,
+        IMessageTypeService messageTypeService)
     {
         _logger = logger;
         _messageService = messageService;
         _contactService = contactService;
+        _messageTypeService = messageTypeService;
     }
 
 //    [HttpGet]
-    public ViewResult Index(int Id)
+    public ViewResult Index(int Id, int MessageTypeId)
     {
-        //входящие письма
+        //по умолчанию => входящие письма
         if (Id > 0)
         {
-            var messages = _messageService.GetMessageAll(Id);
+            var messages = _messageService.GetMessageAll(Id, MessageTypeId);
             if (messages is not null)
             {
                 MessageViewModel viewModel = new MessageViewModel()
@@ -61,7 +64,8 @@ public class MessageController : Controller
                                     ToId = message.ToId,
                                     Theme = message.Theme,
                                     Body = message.Body,
-                                    IsHtml = message.IsHtml
+                                    IsHtml = message.IsHtml,
+                                    TypeId = message.TypeId
                                 },
                                 FromName = fromContact.EmailAddress,
                                 ToName = toContact.EmailAddress,
@@ -109,9 +113,34 @@ public class MessageController : Controller
     {
         if (message is not null)
         {
-            if (!String.IsNullOrEmpty(message.FromName) && String.IsNullOrEmpty(message.ToName))
+            if (!(String.IsNullOrEmpty(message.FromName) && String.IsNullOrEmpty(message.ToName)))
             {
-                if (_messageService.RegisterMessage(message))
+                //fromName -> fromId
+                var fromContact = _contactService.GetContact(message.FromName);
+                if (fromContact is null)
+                    return View();
+
+                //toName -> toId
+                var toContact = _contactService.GetContact(message.ToName);
+                if (toContact is null)
+                    return View();
+
+                //type -> typeId
+                var messageType = _messageTypeService.GetMessageType(message.Type);
+                if (messageType is null)
+                    return View();
+
+                var messageModel = new MessageModel()
+                {
+                    FromId = fromContact.Id,
+                    ToId = toContact.Id,
+                    Theme = message.Theme,
+                    Body = message.Body,
+                    IsHtml = message.IsHtml,
+                    TypeId = messageType.Id
+                };
+                //
+                if (_messageService.RegisterMessage(messageModel))
                     return View("Index");
             }                            
         }        

@@ -8,4 +8,5 @@ public class MessageDetailsViewModel
     public string ToName { get; set; }
     public string Title { get; set; }
     public string Header { get; set; }
+    //public bool Incoming { get; set; }
 }

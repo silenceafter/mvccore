@@ -14,25 +14,20 @@ public class MessageRepository : IMessageRepository
         _context = context;
     }
 
-    public bool RegisterMessage(MessageRequest message)
+    public bool RegisterMessage(MessageModel message)
     {
-        /*try 
+        var done = false;
+        try 
         {
-            if (_co)
-            {
-                _context.Contacts.Add(new ContactModel()
-                {
-                    EmailAddress = contact.EmailAddress
-                });
-                _context.SaveChanges();
-            }                
+            _context.Messages.Add(message);
+            _context.SaveChanges();
+            done = true;
         }
         catch(Exception ex)
         {
             //logger
         }
-        return true;*/
-        return false;
+        return done;
     }
 
     public MessageModel? GetMessage(int contactId, int messageId)
@@ -47,5 +42,12 @@ public class MessageRepository : IMessageRepository
         return _context.Messages
             .Where(row => row.ToId == contactId || row.FromId == contactId)
             .ToList();
+    }
+
+    public List<MessageModel>? GetMessageAll(int contactId, int messageTypeId)
+    {
+        return _context.Messages
+            .Where(row => (row.ToId == contactId || row.FromId == contactId) && 
+                row.TypeId == messageTypeId).ToList();
     }
 }

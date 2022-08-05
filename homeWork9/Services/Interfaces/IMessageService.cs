@@ -6,7 +6,8 @@ namespace homeWork9.Services.Interfaces;
 
 public interface IMessageService
 {
-    public bool RegisterMessage(MessageRequest message);
+    public bool RegisterMessage(MessageModel message);
     public MessageModel? GetMessage(int contactId, int messageId);
     public List<MessageModel>? GetMessageAll(int contactId);
+    public List<MessageModel>? GetMessageAll(int contactId, int messageTypeId);
 }
