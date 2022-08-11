@@ -19,9 +19,16 @@
         foreach (var viewModel in @Model.ContactDetailsViewModels)
         {
             //<h1>"Header here"</h1>
-            <div>                
+            var messageParameters = new Dictionary<string, string>
+            {
+                { "Id", @viewModel.Contact.Id.ToString() },
+                { "MessageTypeId", "1" }
+            };
+
+            <div>
                 @viewModel.Contact.EmailAddress
-                <a asp-action="Create" asp-controller="Message" asp-for="Contact.Id" asp-route-id="@viewModel.Contact.Id" name="id">Send</a> | <a asp-action="Index" asp-controller="Message" asp-route-id="@viewModel.Contact.Id">Messages</a> | <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
+                <!--asp-route-id="@viewModel.Contact.Id"-->
+                <a asp-action="Create" asp-controller="Message" asp-for="Contact.Id" asp-route-id="@viewModel.Contact.Id" name="id">Send</a> | <a asp-all-route-data="messageParameters" asp-action="Index" asp-controller="Message">Messages</a> | <a asp-controller="Contact" asp-action="Edit" asp-route-id="@viewModel.Contact.Id">Edit</a> | <a asp-controller="Contact" asp-action="Delete" asp-route-id="@viewModel.Contact.Id">Delete</a>
             </div>
             <br>
         }

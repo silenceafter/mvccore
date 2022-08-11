@@ -9,10 +9,41 @@
     <form method="post">
     @{
         int cnt = 1;
-        <a asp-controller="Contact" asp-action="Index">назад</a>
-        //<a asp-controller="Contact" asp-action="Index">исходящие письма</a>
-        //ссылка меняется в зависимости от выбранного режима
+        <a asp-controller="Contact" asp-action="Index">назад</a><br>
+        if (@Model.MessageDetailsViewModels.Count > 0)
+        {
+            var message = @Model.MessageDetailsViewModels[0].Message;
+            if (message.TypeId == 1)
+            {
+                //параметры для MessageIndex
+                var messageParameters = new Dictionary<string, string>
+                {
+                    { "Id", message.ToId.ToString() },
+                    { "MessageTypeId", "2" }
+                };
 
+                //исходящие письма
+                <a asp-all-route-data="messageParameters" asp-controller="Message" asp-action="Index">исходящие письма</a>
+                <br>
+                <h4>входящие письма</h4>
+            } 
+
+            if (message.TypeId == 2)
+            {
+                //параметры для MessageIndex
+                var messageParameters = new Dictionary<string, string>
+                {
+                    { "Id", message.FromId.ToString() },
+                    { "MessageTypeId", "1" }
+                };
+
+                //входящие письма
+                <a asp-all-route-data="messageParameters" asp-controller="Message" asp-action="Index">входящие письма</a>
+                <br>
+                <h4>исходящие письма</h4>
+            } 
+        }
+        //
         foreach (var viewModel in @Model.MessageDetailsViewModels)
         {
             //<h1>"Header here"</h1>

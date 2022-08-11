@@ -46,8 +46,15 @@ public class MessageRepository : IMessageRepository
 
     public List<MessageModel>? GetMessageAll(int contactId, int messageTypeId)
     {
-        return _context.Messages
-            .Where(row => (row.ToId == contactId || row.FromId == contactId) && 
-                row.TypeId == messageTypeId).ToList();
+        //входящие письма
+        if (messageTypeId == 1)
+            return _context.Messages
+                .Where(row => row.ToId == contactId).ToList();
+
+        //исходящие письма
+        if (messageTypeId == 2)
+            return _context.Messages
+                .Where(row => row.FromId == contactId).ToList();
+        return null;
     }
 }

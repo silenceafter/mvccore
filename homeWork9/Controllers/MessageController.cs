@@ -30,7 +30,7 @@ public class MessageController : Controller
     public ViewResult Index(int Id, int MessageTypeId)
     {
         //по умолчанию => входящие письма
-        if (Id > 0)
+        if (Id > 0 && MessageTypeId > 0)
         {
             var messages = _messageService.GetMessageAll(Id, MessageTypeId);
             if (messages is not null)
@@ -47,8 +47,8 @@ public class MessageController : Controller
                     if (toContact is null)
                         break;
 
-                    if (toContact.Id == Id)
-                    {
+                    //if (toContact.Id == Id)
+                    //{
                         //from contact
                         var fromContact = _contactService.GetContact(message.FromId);
                         if (fromContact is null)
@@ -65,14 +65,14 @@ public class MessageController : Controller
                                     Theme = message.Theme,
                                     Body = message.Body,
                                     IsHtml = message.IsHtml,
-                                    TypeId = message.TypeId
+                                    TypeId = MessageTypeId//message.TypeId
                                 },
                                 FromName = fromContact.EmailAddress,
                                 ToName = toContact.EmailAddress,
                                 Header = "",
                                 Title = ""
                         });
-                    }                    
+                    //}                    
                 }
                 return View(viewModel);
             } 
