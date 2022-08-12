@@ -26,65 +26,6 @@ public class MessageController : Controller
         _messageTypeService = messageTypeService;
     }
 
-//    [HttpGet]
-    public ViewResult Index(int Id, int MessageTypeId)
-    {
-        //по умолчанию => входящие письма
-        if (Id > 0 && MessageTypeId > 0)
-        {
-            var messages = _messageService.GetMessageAll(Id, MessageTypeId);
-            if (messages is not null)
-            {
-                MessageViewModel viewModel = new MessageViewModel()
-                {
-                    MessageDetailsViewModels = new List<MessageDetailsViewModel>()
-                };
-                //
-                foreach(var message in messages)
-                {
-                    //to contact
-                    var toContact = _contactService.GetContact(message.ToId);
-                    if (toContact is null)
-                        break;
-
-                    //if (toContact.Id == Id)
-                    //{
-                        //from contact
-                        var fromContact = _contactService.GetContact(message.FromId);
-                        if (fromContact is null)
-                            break;                
-
-                        viewModel.MessageDetailsViewModels.Add(
-                            new MessageDetailsViewModel()
-                            {
-                                Message = new MessageModel()
-                                {
-                                    Id = message.Id,
-                                    FromId = message.FromId,
-                                    ToId = message.ToId,
-                                    Theme = message.Theme,
-                                    Body = message.Body,
-                                    IsHtml = message.IsHtml,
-                                    TypeId = MessageTypeId//message.TypeId
-                                },
-                                FromName = fromContact.EmailAddress,
-                                ToName = toContact.EmailAddress,
-                                Header = "",
-                                Title = ""
-                        });
-                    //}                    
-                }
-                return View(viewModel);
-            } 
-        }        
-        return View("Error");
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
     [HttpGet]
     public async Task<ViewResult> Create([Bind("id")] int Id)
     {
@@ -125,11 +66,6 @@ public class MessageController : Controller
                 if (toContact is null)
                     return View();
 
-                //type -> typeId
-                var messageType = _messageTypeService.GetMessageType(message.Type);
-                if (messageType is null)
-                    return View();
-
                 var messageModel = new MessageModel()
                 {
                     FromId = fromContact.Id,
@@ -137,11 +73,11 @@ public class MessageController : Controller
                     Theme = message.Theme,
                     Body = message.Body,
                     IsHtml = message.IsHtml,
-                    TypeId = messageType.Id
+                    TypeId = 2//messageType.Id
                 };
                 //
-                if (_messageService.RegisterMessage(messageModel))
-                    return View("Index");
+                if (_messageService.RegisterMessage(messageModel))             
+                    return Index(fromContact.Id, 2);                   
             }                            
         }        
         return View("Error");
@@ -150,5 +86,60 @@ public class MessageController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    public ViewResult Index(int Id, int MessageTypeId)
+    {
+        //по умолчанию => входящие письма
+        if (Id > 0 && MessageTypeId > 0)
+        {
+            var messages = _messageService.GetMessageAll(Id, MessageTypeId);
+            if (messages is not null)
+            {
+                MessageViewModel viewModel = new MessageViewModel()
+                {
+                    MessageDetailsViewModels = new List<MessageDetailsViewModel>()
+                };
+                //
+                foreach(var message in messages)
+                {
+                    //to contact
+                    var toContact = _contactService.GetContact(message.ToId);
+                    if (toContact is null)
+                        break;
+
+                    //from contact
+                    var fromContact = _contactService.GetContact(message.FromId);
+                    if (fromContact is null)
+                        break;                
+
+                    viewModel.MessageDetailsViewModels.Add(
+                        new MessageDetailsViewModel()
+                        {
+                            Message = new MessageModel()
+                            {
+                                Id = message.Id,
+                                FromId = message.FromId,
+                                ToId = message.ToId,
+                                Theme = message.Theme,
+                                Body = message.Body,
+                                IsHtml = message.IsHtml,
+                                TypeId = MessageTypeId//message.TypeId
+                            },
+                            FromName = fromContact.EmailAddress,
+                            ToName = toContact.EmailAddress,
+                            Header = "",
+                            Title = ""
+                    });
+                }
+                return View("Index", viewModel);
+            } 
+        }        
+        return View("Error");
+    }
+
+    public IActionResult Privacy()
+    {
+        return View();
     }
 }
